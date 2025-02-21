@@ -1,0 +1,51 @@
+﻿@model List<AttendanceViewModel>
+
+@{
+    ViewData["Title"] = "Show Attendance Table";
+    var currentDate = DateTime.Now.ToString("d"); // Displays only date
+    int count = 1;
+}
+
+
+<div class="container">
+    <div class="info-container">
+        <div class="info">
+            <p><strong>Course:</strong> Mathematics</p>
+            <p><strong>Teacher:</strong> John Doe</p>
+            <p><strong>Date:</strong> @currentDate</p>
+        </div>
+        <button class="refresh-btn" onclick="loadData()">Refresh Data</button>
+    </div>
+
+    <table class="attendance-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="attendanceTable">
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@(count++)</td>
+                    <td>@student.FullName</td>
+                    <td class="@(student.IsPresent ? "present" : "absent")">
+                        @(student.IsPresent ? "Present" : "Absent")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function loadData() {
+        fetch("")
+            .then(response => response.text())
+            .then(html => {
+                document.body.innerHTML = html;
+            });
+    }
+</script>
